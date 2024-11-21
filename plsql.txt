@@ -1,3 +1,17 @@
+create or replace PROCEDURE employee_age(
+    emp_age IN NUMBER,
+    emp_output OUT VARCHAR2
+) AS 
+BEGIN
+    IF NVL(emp_age, 0) > 30 THEN
+        emp_output := 'age is in Range';
+    ELSE
+        emp_output := 'age is not in Range';
+    END IF;
+END;
+
+---------------
+
 Insert Employees row using plsql:-
 
 create or replace procedure insert_employees
@@ -14,3 +28,6 @@ begin
 insert into employees (employee_id, first_name, last_name, email, salary, job_id)
 values(p_empid, p_firstname, p_lastname, p_email, p_salary, p_jobid); 
 end;
+-------------
+
+
