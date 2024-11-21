@@ -1,1 +1,16 @@
 Insert Employees row using plsql:-
+
+create or replace procedure insert_employees
+(
+
+p_empid in employees.employee_id%TYPE,
+p_firstname in employees.first_name%type,
+p_lastname in employees.last_name%type,
+p_email in employees.email%type,
+p_salary in employees.salary%type,
+p_jobid in employees.job_id%type
+)IS
+begin 
+insert into employees (employee_id, first_name, last_name, email, salary, job_id)
+values(p_empid, p_firstname, p_lastname, p_email, p_salary, p_jobid); 
+end;
