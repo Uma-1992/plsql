@@ -30,4 +30,29 @@ values(p_empid, p_firstname, p_lastname, p_email, p_salary, p_jobid);
 end;
 -------------
 
+create or replace procedure read_employees
+(
+p_empid in employees.employee_id%type
+)is
+v_firstname employees.first_name%type;
+v_lastname employees.last_name%type;
+v_email employees.email%type;
+v_salary employees.salary%type;
+begin
+select first_name, last_name, email, salary
+into v_firstname, v_lastname, v_email, v_salary
+from employees
+where employee_id = p_empid;
+dbms_output.put_line('First Name:'||v_firstname);
+dbms_output.put_line('Last Name:'|| v_lastname);
+dbms_output.put_line('Email:' || v_email);
+dbms_output.put_line('Salary:' || v_salary);
+EXCEPTION
+when no_data_found then
+dbms_output.put_line('No employee found with id '|| p_empid);
+when OTHERS THEN
+dbms_output.put_line('Error:'|| SQLERRM);
+END;
+
+
 
