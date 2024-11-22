@@ -54,5 +54,24 @@ when OTHERS THEN
 dbms_output.put_line('Error:'|| SQLERRM);
 END;
 
+-----------
+
+create or replace procedure delete_employees
+(
+p_empid in Number
+)is
+begin
+delete from employees
+where employee_id = p_empid;
+if sql%rowcount = 0 then
+dbms_output.put_line('No record found with Employee Id:'||p_empid);
+else
+dbms_output.put_line('Employee Id with:'||p_empid||'deleted succesfully!');
+end if;
+exception
+when others then
+dbms_output.put_line('Error:'||sqlerrm);
+end;
+
 
 
