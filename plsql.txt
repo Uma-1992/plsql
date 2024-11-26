@@ -53,7 +53,20 @@ dbms_output.put_line('No employee found with id '|| p_empid);
 when OTHERS THEN
 dbms_output.put_line('Error:'|| SQLERRM);
 END;
+....................
+create or replace procedure get_EmployeesRecord
+(
+p_empid in Number,
+v_firstname out varchar2,
+v_lastname out varchar2
+)
+is 
+begin
 
+select first_name, last_name into v_firstname, v_lastname from employees
+where employee_id = p_empid;
+dbms_output.put_line('First name:'||v_firstname||', '||'last name:'||v_lastname);
+end;
 -----------
 
 create or replace procedure delete_employees
@@ -72,6 +85,32 @@ exception
 when others then
 dbms_output.put_line('Error:'||sqlerrm);
 end;
+-------------------
+/*using cursor*/
 
+create or replace procedure retrieve_employees
 
-
+is cursor emp_cursor is
+select employee_id, first_name, last_name, email from employees;
+v_empid employees.employee_id%type;
+v_firstname employees.first_name%type;
+v_lastname employees.last_name %type;
+v_email employees.email%type;
+v_row_count Number:=0;
+begin
+open emp_cursor;
+loop
+fetch emp_cursor into v_empid, v_firstname, v_lastname, v_email;
+exit when emp_cursor%notfound;
+v_row_count := v_row_count+1;
+dbms_output.put_line('Employee Id: '||v_empid);
+dbms_output.put_line('First Name: '||v_firstname);
+dbms_output.put_line('Last Name: '||v_lastname);
+dbms_output.put_line('email: '|| v_email);
+end loop;
+close emp_cursor;
+dbms_output.put_line('Employees Row Count:'|| v_row_count);
+exception
+when others then
+dbms_output.put_line('Error:' ||SQLERRM);
+end;
