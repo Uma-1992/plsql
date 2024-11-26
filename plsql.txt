@@ -53,7 +53,20 @@ dbms_output.put_line('No employee found with id '|| p_empid);
 when OTHERS THEN
 dbms_output.put_line('Error:'|| SQLERRM);
 END;
+....................
+create or replace procedure get_EmployeesRecord
+(
+p_empid in Number,
+v_firstname out varchar2,
+v_lastname out varchar2
+)
+is 
+begin
 
+select first_name, last_name into v_firstname, v_lastname from employees
+where employee_id = p_empid;
+dbms_output.put_line('First name:'||v_firstname||', '||'last name:'||v_lastname);
+end;
 -----------
 
 create or replace procedure delete_employees
